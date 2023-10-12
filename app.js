@@ -56,7 +56,7 @@ app.post('/save-data', (req, res) => {
     });
 
   // Send a response to the client once data is saved.
-  res.status(201).json({ message: 'Data saved successfully' });
+  //res.status(201).json({ message: 'Data saved successfully' });
 });
 
 app.get('/get-data', (req, res) => {
@@ -89,7 +89,7 @@ app.get('/get-data', (req, res) => {
       });
   
     // Send a response to the client once data is saved.
-    res.status(201).json({ message: 'Data saved successfully' });
+    // res.status(201).json({ message: 'Data saved successfully' });
   }
 );
 
