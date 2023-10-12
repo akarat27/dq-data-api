@@ -1,12 +1,17 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const pgp = require('pg-promise')();
-const db = pgp('postgres://username:password@localhost:5432/database_name');
+require('dotenv').config()
+const mysql = require('mysql2');
+//const connection = mysql.createConnection(process.env.DATABASE_URL)
 const app = express();
 
 app.use(bodyParser.json());
 
+
+// Create a MySQL connection using the provided database URL.
+const pool = mysql.createPool({ connectionLimit: 10, host: process.env.DATABASE_URL });
+  
 // Define your API route for saving data.
 app.post('/save-data', (req, res) => {
   // Handle saving the data to the PostgreSQL database here.
@@ -17,7 +22,15 @@ app.post('/save-data', (req, res) => {
   // You'll need to establish a connection and use pg-promise or another PostgreSQL library to perform database operations.
 
     // Insert the data into the database.
-    db.none('INSERT INTO your_table (firstName, lastName, cardID, tel, email, year, month, day, sex, agreement1, agreement2) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)', [
+    // Use a connection from the pool to insert the data into the database.
+    pool.getConnection((err, connection) => {
+        if (err) {
+        res.status(500).json({ error: 'Database connection error' });
+        return;
+        }
+
+        const query = 'INSERT INTO dq_data (firstName, lastName, cardID, tel, email, year, month, day, sex, agreement1, agreement2) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        const values = [
         data.firstName,
         data.lastName,
         data.cardID,
@@ -29,17 +42,56 @@ app.post('/save-data', (req, res) => {
         data.sex,
         data.agreement1,
         data.agreement2,
-    ])
-        .then(() => {
-        res.status(201).json({ message: 'Data saved successfully' });
-        })
-        .catch((error) => {
-        res.status(500).json({ error: 'An error occurred while saving data' });
+        ];
+
+        connection.query(query, values, (queryError) => {
+        connection.release(); // Release the connection back to the pool.
+
+        if (queryError) {
+            res.status(500).json({ error: 'An error occurred while saving data' });
+        } else {
+            res.status(201).json({ message: 'Data saved successfully' });
+        }
         });
+    });
 
   // Send a response to the client once data is saved.
   res.status(201).json({ message: 'Data saved successfully' });
 });
+
+app.get('/get-data', (req, res) => {
+    // Handle saving the data to the PostgreSQL database here.
+    // Parse the request body to get the data to save.
+    const data = req.body;
+  
+    // Add code to save the data to the PostgreSQL database.
+    // You'll need to establish a connection and use pg-promise or another PostgreSQL library to perform database operations.
+  
+      // Insert the data into the database.
+      // Use a connection from the pool to insert the data into the database.
+      pool.getConnection((err, connection) => {
+          if (err) {
+          res.status(500).json({ error: 'Database connection error' });
+          return;
+          }
+  
+          const query = 'SELECT * FROM dq_data';
+  
+          connection.query(query, (queryError, result) => {
+          connection.release(); // Release the connection back to the pool.
+  
+          if (queryError) {
+              res.status(500).json({ error: 'An error occurred while saving data' });
+          } else {
+              res.status(201).json(result);
+          }
+          });
+      });
+  
+    // Send a response to the client once data is saved.
+    res.status(201).json({ message: 'Data saved successfully' });
+  }
+);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
