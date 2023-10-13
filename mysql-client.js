@@ -2,7 +2,7 @@ const mysql = require("mysql2/promise");
 
 async function main() {
   try {
-    DATABASE_URL=`mysql://${PLANETSCALE_DB_USERNAME}:${PLANETSCALE_DB_PASSWORD}@${PLANETSCALE_DB_HOST}/${PLANETSCALE_DB}?sslmode=require&sslaccept=strict&sslcert=${PLANETSCALE_SSL_CERT_PATH}`
+    DATABASE_URL=`mysql://${process.env.PLANETSCALE_DB_USERNAME}:${process.env.PLANETSCALE_DB_PASSWORD}@${process.env.PLANETSCALE_DB_HOST}/${process.env.PLANETSCALE_DB}?sslmode=require&sslaccept=strict&sslcert=${process.env.PLANETSCALE_SSL_CERT_PATH}`
     console.log(`DATABASE_URL: ${DATABASE_URL}`);
 
     console.log("[MYSQL] create pool -> start");
