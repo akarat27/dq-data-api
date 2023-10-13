@@ -7,6 +7,8 @@ const mysql = require('mysql2');
 const getConnection = require("./mysql-client");
 
 const app = express();
+// enable CORS - Cross Origin Resource Sharing
+app.use(cors());
 
 app.use(bodyParser.json());
 
