@@ -6,9 +6,10 @@ require('dotenv').config()
 const mysql = require('mysql2/promise');
 // const getConnection = require("./mysql-client");
 
-// const DATABASE_URL=`mysql://${process.env.PLANETSCALE_DB_USERNAME}:${process.env.PLANETSCALE_DB_PASSWORD}@${process.env.PLANETSCALE_DB_HOST}/${process.env.PLANETSCALE_DB}?sslmode=require&sslaccept=strict&sslcert=${process.env.PLANETSCALE_SSL_CERT_PATH}`
-const DATABASE_URL=`mysql://${process.env.PLANETSCALE_DB_USERNAME}:${process.env.PLANETSCALE_DB_PASSWORD}@${process.env.PLANETSCALE_DB_HOST}/${process.env.PLANETSCALE_DB}?sslmode=require&sslaccept=strict`
-    
+const DATABASE_URL=`mysql://${process.env.PLANETSCALE_DB_USERNAME}:${process.env.PLANETSCALE_DB_PASSWORD}@${process.env.PLANETSCALE_DB_HOST}/${process.env.PLANETSCALE_DB}?sslmode=require&sslaccept=strict&sslcert=${process.env.PLANETSCALE_SSL_CERT_PATH}`
+console.log(`DATABASE_URL: ${DATABASE_URL}`)
+
+//const DATABASE_URL=`mysql://${process.env.PLANETSCALE_DB_USERNAME}:${process.env.PLANETSCALE_DB_PASSWORD}@${process.env.PLANETSCALE_DB_HOST}/${process.env.PLANETSCALE_DB}?sslmode=require&sslaccept=strict`    
 
 const app = express();
 // enable CORS - Cross Origin Resource Sharing
