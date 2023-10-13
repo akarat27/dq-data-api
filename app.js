@@ -4,8 +4,10 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 require('dotenv').config()
 const mysql = require('mysql2');
-
 // const getConnection = require("./mysql-client");
+
+const DATABASE_URL=`mysql://${process.env.PLANETSCALE_DB_USERNAME}:${process.env.PLANETSCALE_DB_PASSWORD}@${process.env.PLANETSCALE_DB_HOST}/${process.env.PLANETSCALE_DB}?sslmode=require&sslaccept=strict&sslcert=${process.env.PLANETSCALE_SSL_CERT_PATH}`
+    
 
 const app = express();
 // enable CORS - Cross Origin Resource Sharing
@@ -27,7 +29,7 @@ app.post('/save-data', async(req, res) => {
 
   // Add code to save the data to the PostgreSQL database.
   // You'll need to establish a connection and use pg-promise or another PostgreSQL library to perform database operations.
-  let connection =  mysql.createConnection(process.env.DATABASE_URL)
+  let connection =  mysql.createConnection(DATABASE_URL)
 //   await getConnection();
 
   const sqlquery = 'INSERT INTO dq_data (firstName, lastName, cardID, tel, email, year, month, day, sex, agreement1, agreement2) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
@@ -61,7 +63,7 @@ app.post('/save-data', async(req, res) => {
 app.get('/get-data', async(req, res) => {
 
     //let connection = await getConnection();
-    let connection =  mysql.createConnection(process.env.DATABASE_URL)
+    let connection =  mysql.createConnection(DATABASE_URL)
     
     const sqlquery = 'SELECT * FROM dq_data';
 
