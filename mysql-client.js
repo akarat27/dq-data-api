@@ -6,11 +6,11 @@ async function main() {
       connectionLimit: 80,
       //acquireTimeout: 120000,
       //conneectionTimeout: 120000,
-      host: 'ap-southeast.connect.psdb.cloud', // process.env.DB_HOST, //baseconfig.mysql_host, //'172.17.0.1',
+      host: 'aws.connect.psdb.cloud', // process.env.DB_HOST, //baseconfig.mysql_host, //'172.17.0.1',
       port: 3306,
-      user: 'w1iz1htfh7qxf0u4bevn',
-      password: 'pscale_pw_hiWmIx16l4IfyUk61phws6GTuuYz2UXy3iB51G9D60A',
-      database: 'app-db',
+      user: 'k8d1k72squcdc0ocxxsu',
+      password: 'pscale_pw_wzlw6Ph0DCiWlKJ2N7X5pm1yUuumlLAEFvTETE57Pq8',
+      database: 'base-db',
       ssl: {
         // DO NOT DO THIS
         // set up your ca correctly to trust the connection
@@ -45,11 +45,11 @@ module.exports = getConnection;
 //async anonymous function
 (async () => {
   pool.then(async(pool) => {
-    console.log("[MYSQL] pool " + pool);
+    console.log("[MYSQL] pool " + pool );
     const connection = await getConnection();
     const [rows] = await connection.query("SELECT * FROM dq_data");
     console.log(rows);
-    connection.end();
+    connection.release();
   });
  
 })();
