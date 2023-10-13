@@ -6,15 +6,16 @@ async function main() {
       connectionLimit: 80,
       //acquireTimeout: 120000,
       //conneectionTimeout: 120000,
-      host: 'aws.connect.psdb.cloud', // process.env.DB_HOST, //baseconfig.mysql_host, //'172.17.0.1',
-      port: 3306,
-      user: 'j13zn5lxhgq2hankyzc1',
-      password: 'pscale_pw_BEuKRdF9hfrYVIgY325MmvfKKWUMZ3rqiyYbPbOcVov',
-      database: 'base-db',
+      host: process.env.PLANETSCALE_DB_HOST, //baseconfig.mysql_host, //'172.17.0.1',
+      // port: 3306,
+      user: process.env.PLANETSCALE_DB_USERNAME,
+      password: process.env.PLANETSCALE_DB_PASSWORD,
+      database: process.env.PLANETSCALE_DB,
       ssl: {
+        ca: process.env.PLANETSCALE_SSL_CERT_PATH
         // DO NOT DO THIS
         // set up your ca correctly to trust the connection
-        rejectUnauthorized: false,
+        // rejectUnauthorized: false,
       },
     });
     console.log("[MYSQL] create pool -> success");
