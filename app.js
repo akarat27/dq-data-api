@@ -25,6 +25,11 @@ app.post('/save-data', (req, res) => {
     // Use a connection from the pool to insert the data into the database.
     pool.getConnection((err, connection) => {
         if (err) {
+        console.log(err)
+            //print error to console for debugging purposes 
+            //print stack trace to console for debugging purposes 
+            
+
         res.status(500).json({ error: 'Database connection error' });
         return;
         }
