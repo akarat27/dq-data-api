@@ -8,10 +8,12 @@ const app = express();
 
 app.use(bodyParser.json());
 
+console.log(process.env.DATABASE_URL)
 
 // Create a MySQL connection using the provided database URL.
 const pool = mysql.createPool({ connectionLimit: 10, host: process.env.DATABASE_URL });
-  
+console.log(pool)  
+
 // Define your API route for saving data.
 app.post('/save-data', (req, res) => {
   // Handle saving the data to the PostgreSQL database here.
@@ -30,7 +32,7 @@ app.post('/save-data', (req, res) => {
             //print stack trace to console for debugging purposes 
 
 
-        res.status(500).json({ error: 'Database connection error '+err+ ' '+err.stack });
+        res.status(500).json({ error: 'Database connection error '+err+ ' ' +err.stack });
         return;
         }
 
@@ -76,7 +78,7 @@ app.get('/get-data', (req, res) => {
       // Use a connection from the pool to insert the data into the database.
       pool.getConnection((err, connection) => {
           if (err) {
-          res.status(500).json({ error: 'Database connection error' });
+          res.status(500).json({ error: 'Database connection error'+ err + ' ' + err.stack});
           return;
           }
   
