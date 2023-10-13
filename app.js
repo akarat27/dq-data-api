@@ -4,9 +4,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 require('dotenv').config()
 const mysql = require('mysql2/promise');
-// const getConnection = require("./mysql-client");
 
-//const DATABASE_URL=`mysql://${process.env.PLANETSCALE_DB_USERNAME}:${process.env.PLANETSCALE_DB_PASSWORD}@${process.env.PLANETSCALE_DB_HOST}/${process.env.PLANETSCALE_DB}?sslmode=require&sslaccept=strict&sslcert=${process.env.PLANETSCALE_SSL_CERT_PATH}`
 const DATABASE_URL=`mysql://${process.env.PLANETSCALE_DB_USERNAME}:${process.env.PLANETSCALE_DB_PASSWORD}@${process.env.PLANETSCALE_DB_HOST}/${process.env.PLANETSCALE_DB}?ssl={"rejectUnauthorized":true}`    
 console.log(`DATABASE_URL: ${DATABASE_URL}`)
 
@@ -55,7 +53,7 @@ app.post('/save-data', async(req, res) => {
             return res.status(201).json({ message: 'Data saved successfully' });
         }
     });
-  connection.release();
+  connection.end();
 
   // Send a response to the client once data is saved.
   //res.status(201).json({ message: 'Data saved successfully' });
@@ -72,7 +70,7 @@ app.get('/get-data', async(req, res) => {
 
     res.status(201).json([rows]);
 
-    connection.release();
+    connection.end();
 }
 );
 
