@@ -53,6 +53,7 @@ app.post('/save-data', (req, res) => {
         data.agreement2,
         ];
 
+
         connection.query(query, values, (queryError) => {
         connection.release(); // Release the connection back to the pool.
 
@@ -75,21 +76,15 @@ app.get('/get-data', async(req, res) => {
     
     console.log(connection)
     
-    const query = 'SELECT * FROM dq_data';
+    const sqlquery = 'SELECT * FROM dq_data';
 
-    console.log(query)
+    console.log(sqlquery)
+    
+    const [rows] = await connection.query(sqlquery);
 
-    connection.query(query, (queryError, result) => {
-        
-        connection.release(); // Release the connection back to the pool.
+    res.status(201).json([rows]);
 
-        if (queryError) {
-            res.status(500).json({ error: 'An error occurred while saving data' });
-        } else {
-            res.status(201).json(result);
-        }
-
-    });    
+    connection.release();
 }
 );
 
