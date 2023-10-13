@@ -72,17 +72,23 @@ app.get('/get-data', async(req, res) => {
     // res.status(201).json({ message: 'Data consume successfully' });
 
     let connection = await getConnection();
-      
+    
+    console.log(connection)
+    
     const query = 'SELECT * FROM dq_data';
 
-    connection.query(query, (queryError, result) => {
-    connection.release(); // Release the connection back to the pool.
+    console.log(query)
 
-    if (queryError) {
-        res.status(500).json({ error: 'An error occurred while saving data' });
-    } else {
-        res.status(201).json(result);
-    }
+    connection.query(query, (queryError, result) => {
+        
+        connection.release(); // Release the connection back to the pool.
+
+        if (queryError) {
+            res.status(500).json({ error: 'An error occurred while saving data' });
+        } else {
+            res.status(201).json(result);
+        }
+
     });    
 }
 );
