@@ -59,6 +59,27 @@ app.post('/save-data', async(req, res) => {
   //res.status(201).json({ message: 'Data saved successfully' });
 });
 
+app.post('/is-exists', async(req, res) => {
+    const data = req.body;
+    const sqlquery = 'SELECT * FROM dq_data WHERE (cardID = ? AND tel = ?) or (cardID = ? AND email = ?)';
+    const values = [
+        data.cardID,
+        data.tel,
+        data.cardID,
+        data.email,
+    ];
+    let connection = await mysql.createConnection(DATABASE_URL)
+    const [rows] = await connection.query(sqlquery, values);
+    connection.end();
+    if (rows.length > 0) {
+        return res.status(201).json({ message: 'Data exists' });
+    } else {
+        return res.status(201).json({ message: 'Data not exists' });
+    }
+}   
+);
+    
+
 app.get('/get-data', async(req, res) => {
 
     //let connection = await getConnection();
