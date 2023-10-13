@@ -6,10 +6,10 @@ async function main() {
       connectionLimit: 80,
       //acquireTimeout: 120000,
       //conneectionTimeout: 120000,
-      host: 'aws.connect.psdb.cloud', // process.env.DB_HOST, //baseconfig.mysql_host, //'172.17.0.1',
+      host: 'ap-southeast.connect.psdb.cloud', // process.env.DB_HOST, //baseconfig.mysql_host, //'172.17.0.1',
       port: 3306,
-      user: 'k8d1k72squcdc0ocxxsu',
-      password: 'pscale_pw_wzlw6Ph0DCiWlKJ2N7X5pm1yUuumlLAEFvTETE57Pq8',
+      user: 'mo2o5vaahh59kgl1wy02',
+      password: 'pscale_pw_duLsIRYGgnsoNbYMDnOZQeLJqK1fV5840dUSiCy2502',
       database: 'base-db',
       ssl: {
         // DO NOT DO THIS
