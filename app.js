@@ -28,9 +28,9 @@ app.post('/save-data', (req, res) => {
         console.log(err)
             //print error to console for debugging purposes 
             //print stack trace to console for debugging purposes 
-            
 
-        res.status(500).json({ error: 'Database connection error' });
+
+        res.status(500).json({ error: 'Database connection error '+err+ ' '+err.stack });
         return;
         }
 
