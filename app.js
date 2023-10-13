@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 require('dotenv').config()
-const mysql = require('mysql2');
+const mysql = require('mysql2/promise');
 // const getConnection = require("./mysql-client");
 
 // const DATABASE_URL=`mysql://${process.env.PLANETSCALE_DB_USERNAME}:${process.env.PLANETSCALE_DB_PASSWORD}@${process.env.PLANETSCALE_DB_HOST}/${process.env.PLANETSCALE_DB}?sslmode=require&sslaccept=strict&sslcert=${process.env.PLANETSCALE_SSL_CERT_PATH}`
