@@ -2,6 +2,10 @@ const mysql = require("mysql2/promise");
 
 async function main() {
   try {
+    DATABASE_URL=`mysql://${PLANETSCALE_DB_USERNAME}:${PLANETSCALE_DB_PASSWORD}@${PLANETSCALE_DB_HOST}/${PLANETSCALE_DB}?sslmode=require&sslaccept=strict&sslcert=${PLANETSCALE_SSL_CERT_PATH}`
+    console.log(`DATABASE_URL: ${DATABASE_URL}`);
+
+    console.log("[MYSQL] create pool -> start");
     pool = await mysql.createPool({
       connectionLimit: 80,
       //acquireTimeout: 120000,
@@ -12,10 +16,10 @@ async function main() {
       password: process.env.PLANETSCALE_DB_PASSWORD,
       database: process.env.PLANETSCALE_DB,
       ssl: {
-        ca: process.env.PLANETSCALE_SSL_CERT_PATH
+        //ca: process.env.PLANETSCALE_SSL_CERT_PATH
         // DO NOT DO THIS
         // set up your ca correctly to trust the connection
-        // rejectUnauthorized: false,
+         rejectUnauthorized: false,
       },
     });
     console.log("[MYSQL] create pool -> success");
