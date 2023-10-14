@@ -79,6 +79,24 @@ app.post('/is-exists', async(req, res) => {
 }   
 );
     
+app.post('/login', async(req, res) => {
+    const data = req.body;
+    const sqlquery = 'SELECT * FROM dq_data WHERE firstName = ? AND lastName = ?';
+    const values = [
+        data.firstName,
+        data.lastName,
+    ];
+    let connection = await mysql.createConnection(DATABASE_URL)
+    const [rows] = await connection.query(sqlquery, values);
+    connection.end();
+    if (rows.length > 0) {
+        return res.status(201).json({ message: 'login success' });
+    } else {
+        return res.status(201).json({ message: 'login fail' });
+    }
+}   
+);
+
 
 app.get('/get-data', async(req, res) => {
 
