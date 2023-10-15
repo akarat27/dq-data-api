@@ -99,10 +99,10 @@ app.post('/login', async(req, res) => {
 
 app.post('/login2', async(req, res) => {
     const data = req.body;
-    const sqlquery = 'SELECT * FROM dq_data WHERE cardID = ? AND tel = ?';
+    const sqlquery = 'SELECT * FROM dq_data WHERE cardID = ? ';
     const values = [
         data.cardID,
-        data.tel,
+        // data.tel,
     ];
     let connection = await mysql.createConnection(DATABASE_URL)
     const [rows] = await connection.query(sqlquery, values);
